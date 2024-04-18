@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../profile.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a59b9b09ab.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Spring Boot Learn</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #070F2B; font-weight:bold;width: 100%;">
+    <a class="navbar-brand" href="/home">
+        <img class="logo" src="/Assets/logoSpringBoot.png"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item-sb">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item-sb">
+                <a class="nav-link" href="/leaderboard">Leaderboard</a>
+            </li>
+            <li class="nav-item-sb active">
+                <a class="nav-link" href="/profile">
+                    <span th:text="${nameNavbar}"></span>
+                    <img class="profile-pic-nav" th:src="@{'/avatar/'+${user.profilePictureName}}"/></a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
+            <button type="submit" class="btn btn-outline-danger my-2 my-sm-0">Log Out
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="row justify-content-center align-items-center" style="margin: 0;">
+    <div class="bigbox-profile">
+        <div class="row" style="margin: 0;padding: 0;">
+            <div class="col text-center tab-label" data-tab="label1" style="border-radius: 10px 10px 0 0;">
+                Account
+            </div>
+        </div>
+
+        <div class="tab active" id="label1">
+            <div class="row justify-content-center" style="margin: 0;">
+                <div class="pp-content text-center">
+                    <img class="profile-pic-account" th:src="@{'/avatar/'+${user.profilePictureName}}"/>
+                    <div>
+                        <p class="acc-name" th:text="${user.name}"></p>
+                        <div class="row justify-content-center align-items-center"
+                             style="margin: 0;margin-top:10px;">
+                            <img id="badgeProfileImg"
+                                 style="width: 30px;height: 28px;margin-right: 5px;transform: translateY(-30%);"
+                                 src="../Assets/BronzeBadge.png">
+                            <p id="badgeProfile" th:text="${user.badge}"></p>
+                        </div>
+                        <div class="life text-center">
+                            <div th:each="i : ${#numbers.sequence(1, 3)}" th:remove="tag">
+                                <!-- If i is less than or equal to the count from the database -->
+                                <img th:if="${i le user.life}" th:id="'image' + ${i}" th:src="@{/Assets/Life.png}"
+                                     alt="Image" style="width: 25px; margin-left: 5px;"/> <!-- Example style -->
+                                <!-- If i is greater than the count from the database -->
+                                <img th:if="${i gt user.life}" id="other-image" th:src="@{/Assets/emptyLife.png}"
+                                     alt="Other Image" style="width: 25px; margin-left: 5px;"/> <!-- Example style -->
+                            </div>
+                            <!-- Additional content -->
+                            <!--                            <img th:if="${user.life < 3}" id="addLife" src="/Assets/add.png"-->
+                            <!--                                 data-target="#modalTambahLife"-->
+                            <!--                                 data-toggle="modal" style="cursor:pointer;width: 25px;"/>-->
+                        </div>
+                        <button type="button" class="btn button-edit btn-block" style="margin-top:20px;font-size:14px"
+                                th:if="${user.life < 3}" data-target="#modalTambahLife" data-toggle="modal">+ Tambah
+                            Kesempatan
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin: 0;">
+                <div class="box-information">
+                    <form style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label class="label-style" for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" th:value="${user.name}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-style" for="username">Username</label>
+                            <input type="text" class="form-control" id="username" th:value="${user.username}"
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-style" for="email">Email</label>
+                            <input type="email" class="form-control" id="email" th:value="${user.email}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-style" for="password">Password</label>
+                            <input type="password" class="form-control" id="password" th:value="PASSWORD"
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-style" for="badge">Badge</label>
+                            <input type="text" class="form-control" id="badge" th:value="${user.badge}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-style" for="gold">Gold</label>
+                            <div class="input-coin">
+                                <img src="/Assets/coin.png"/>
+                                <input type="text" class="form-control" id="gold" th:value="${user.gold}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-style" for="gold">Exp</label>
+                            <div class="input-coin">
+                                <img src="/Assets/exp.png"/>
+                                <input type="text" class="form-control" id="exp" th:value="${user.exp}" disabled>
+                            </div>
+                        </div>
+                        <a href="/editData">
+                            <button type="button" class="btn button-edit btn-block" style="margin-top: 40px;">Edit
+                                Informasi Akun
+                            </button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="box-avatar">
+                    <div class="title-avatar">
+                        Avatar Collection
+                    </div>
+                    <div class="subtitle-avatar">
+                        Pilih avatar yang diinginkan (klik 2x untuk membatalkan pilihan)
+                    </div>
+                    <form id="formImg" action="/changeProfilePicture" method="post">
+                        <div class="avatar justify-content-center">
+                            <img id="Avatar1" src="/avatar/Avatar1" alt="Image 1" onclick="highlightImage(this)">
+                            <img id="Avatar2" src="/avatar/Avatar2" alt="Image 2" onclick="highlightImage(this)">
+                            <img id="Avatar3" src="/avatar/Avatar3" alt="Image 3" onclick="highlightImage(this)">
+                            <img id="Avatar4" src="/avatar/Avatar4" alt="Image 4" onclick="highlightImage(this)">
+                            <img id="Avatar5" src="/avatar/Avatar5" alt="Image 5" onclick="highlightImage(this)">
+                            <img id="Avatar6" src="/avatar/Avatar6" alt="Image 6" onclick="highlightImage(this)">
+                            <img id="Avatar7" src="/avatar/Avatar7" alt="Image 7" onclick="highlightImage(this)">
+                            <img id="Avatar8" src="/avatar/Avatar8" alt="Image 8" onclick="highlightImage(this)">
+                            <img id="Avatar9" src="/avatar/Avatar9" alt="Image 9" onclick="highlightImage(this)">
+                            <img id="Avatar10" src="/avatar/Avatar10" alt="Image 10" onclick="highlightImage(this)">
+                        </div>
+                        <input type="hidden" id="submitImgId" name="submitImgId">
+                        <button type="button" class="btn button-edit btn-block" style="margin-top: 40px;"
+                                id="saveAvatar" onclick="submitForm()" disabled>Simpan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL Tambah Life -->
+<div class="modal fade" id="modalTambahLife" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Konfirmasi
+                    Penambahan Kesempatan</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;" th:if="${user.gold >= 20}">
+                <p>Tambah 1 kesempatan?</p>
+                <p>Harga : <img src="/Assets/coin.png" style="width: 20px;"/> 20</p>
+                <p>Gold tersisa : <img src="/Assets/coin.png" style="width: 20px;"/> <span
+                        th:text="${user.gold}"></span></p>
+            </div>
+            <div class="modal-body" style="text-align: center;" th:if="${user.gold < 20}">
+                <p>Gold Anda tidak mencukupi, silakan menunggu pergantian hari untuk penambahan kesempatan</p>
+                <p>Gold tersisa : <img src="/Assets/coin.png" style="width: 20px;"/> <span
+                        th:text="${user.gold}"></span></p>
+            </div>
+            <div class="modal-footer" th:if="${user.gold>=20}">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success" onclick="tambahLife()">Tambah</button>
+            </div>
+            <div class="modal-footer" th:if="${user.gold < 20}">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL PEMBELIAN LIFE -->
+</div>
+<script>
+    function tambahLife(){
+        window.location.href ="/tambahLifeProfil";
+    }
+    function validationForm() {
+        var newName;
+        var newEmail;
+        var newPassword;
+        var confirmNewPassword;
+
+        document.getElementById("newName").addEventListener("input", function () {
+            newName = document.getElementById("newName").value.trim();
+            if (newName === "") {
+                //is empty
+                document.getElementById("nameValidation").style.display = "block";
+            } else {
+                document.getElementById("nameValidation").style.display = "none";
+            }
+        })
+
+        document.getElementById("newEmail").addEventListener("input", function () {
+            newEmail = document.getElementById("newEmail").value.trim();
+            if (newEmail === "") {
+                //is empty
+                document.getElementById("emailValidation").style.display = "block";
+            } else {
+                document.getElementById("emailValidation").style.display = "none";
+
+            }
+        })
+
+        document.getElementById("newPassword").addEventListener("input", function () {
+            newPassword = document.getElementById("newPassword").value.trim();
+            if (newPassword === "") {
+                //is empty
+                document.getElementById("PassValidation").style.display = "block";
+            } else {
+                document.getElementById("PassValidation").style.display = "none";
+
+            }
+        })
+
+        document.getElementById("confirmNewPassword").addEventListener("input", function () {
+            confirmNewPassword = document.getElementById("confirmNewPassword").value.trim();
+            newPassword = document.getElementById("newPassword").value.trim();
+            if (confirmNewPassword === "" || confirmNewPassword !== newPassword) {
+                //is empty
+                document.getElementById("confirmPassValidation").style.display = "block";
+            } else {
+                document.getElementById("confirmPassValidation").style.display = "none";
+            }
+        })
+    }
+
+    // Open modal confirmation buy
+    document.querySelectorAll(".modal-confirm-buy").forEach(function (element) {
+        element.addEventListener("click", function () {
+            var target = this.getAttribute("data-target");
+            $(target).modal('show');
+        })
+    })
+
+    var highlightId = null;
+    function submitForm() {
+        document.getElementById("submitImgId").value = highlightId;
+        document.getElementById("formImg").submit();
+        var images = document.querySelectorAll('.avatar img');
+        images.forEach(function (img) {
+            img.classList.remove('highlighted');
+        })
+        document.getElementById("saveAvatar").setAttribute("disabled", true);
+    }
+
+    function highlightImage(image) {
+        // Check if the clicked image already has the 'highlighted' class
+
+        var isHighlighted = image.classList.contains('highlighted');
+
+        // Remove 'highlighted' class from all images
+        var images = document.querySelectorAll('.avatar img');
+        images.forEach(function (img) {
+            img.classList.remove('highlighted');
+        });
+
+        // If the clicked image is already highlighted, remove the class; otherwise, add it
+        if (!isHighlighted) {
+            image.classList.add('highlighted');
+            highlightId = image.id;
+            document.getElementById("saveAvatar").removeAttribute("disabled");
+        } else {
+            highlightId = null;
+            document.getElementById("saveAvatar").setAttribute("disabled", true);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabLabels = document.querySelectorAll('.tab-label');
+        const tabs = document.querySelectorAll('.tab');
+
+        tabLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                const targetTab = label.getAttribute('data-tab');
+                // Hide all tabs and remove active class from labels
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                tabLabels.forEach(label => {
+                    label.classList.remove('active');
+                });
+
+                // Show the clicked tab and set active class to label
+                document.getElementById(targetTab).classList.add('active');
+                label.classList.add('active');
+            });
+        });
+    });
+
+    //change image Badge
+    var badgeProfileImg = document.getElementById('badgeProfileImg');
+    var badgeProfileText = document.getElementById('badgeProfile').textContent;
+
+    // Function to change image based on text
+    function changeImageBasedOnText(text) {
+        // Define mappings of text to image sources
+        var imageMappings = {
+            'Bronze': '/Assets/BronzeBadge.png',
+            'Silver': '/Assets/SilverBadge.png',
+            'Gold': '/Assets/GoldBadge.png',
+            'Platinum': '/Assets/PlatinumBadge.png',
+            'Diamond': '/Assets/DiamondBadge.png'
+            // Add more mappings as needed
+        };
+
+        // Check if the text exists in mappings
+        if (text in imageMappings) {
+            // Change the source of the image
+            badgeProfileImg.src = imageMappings[text];
+        } else {
+            console.log("Image source not found for text:", text);
+        }
+    }
+
+    // Call the function with initial text
+    changeImageBasedOnText(badgeProfileText);
+</script>
+
+
+<footer class="footer">
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;">
+        <h5 style="color: white;margin-top: 20px;">Contact Us</h5>
+    </div>
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;height: 70px;">
+        <a href="mailto:springbootlearn9@gmail.com">
+            <p style="font-size: 14px;">springbootlearn9@gmail.com</p>
+        </a>
+    </div>
+    <div class="row justify-content-center align-items-center"
+         style="background-color: rgb(0, 0, 0); margin-top: 20px;width: 100%;margin:0">
+        <p class="text-muted" style="padding: 5px;font-size: 14px;">Copyright @2024 All Rights Reserved.</p>
+    </div>
+</footer>
+</body>

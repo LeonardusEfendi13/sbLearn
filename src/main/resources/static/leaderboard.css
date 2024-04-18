@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption&display=swap');
+
+*{
+    font-family: 'PT Sans Caption', sans-serif;
+}
+body {
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+}
+
+body::after {
+    content: '';
+    display: block;
+    height: 150px;
+}
+.logo{
+    width: 85px;
+    height: 85px;
+    margin-left: 70px;
+}
+.nav-item-sb{
+   margin-right: 20px;
+   font-size: 18px;
+}
+.profile-pic{
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.box-title{
+    margin-top: 20px;
+    width: 20%;
+    height: 60px;
+    background-color: #535C91;
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+}
+.box-title p{
+    /* background-color: red; */
+    font-weight:bold;
+    font-size: 24px;
+}
+
+.box-table{
+    margin-top: 40px;
+    width: 45%;
+    /* height: 0vh; */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.thead-style{
+    background-color: #1B1A55;
+    color: white;
+}
+.tbody-style{
+    background-color: #A5A4DD;
+    color: black;
+}
+.table-no{
+    width:10%;
+    /* background-color: red; */
+}
+.table-username{
+    width: 57%;
+    /* background-color: blue; */
+}
+.table-exp{
+    width: 15%;
+}
+.footer {
+    background-color: #070F2B;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 16px;
+    height: 150px;
+}
+
+@media only screen and (max-width: 768px) {
+    .box-title{
+        width: 30%;
+    }
+    .box-table{
+        width: 60%;
+    }
+    .logo{
+        margin-left: 30px;
+    }
+
+}
+@media only screen and (max-width: 480px) {
+    .box-title{
+        width: 50%;
+    }
+    .box-table{
+        width: 80%;
+    }
+    .logo{
+        margin-left: 20px;
+    }
+
+}

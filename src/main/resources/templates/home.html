@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/home.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a59b9b09ab.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <title>Spring Boot Learn</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #070F2B; font-weight:bold;width: 100%;">
+    <a class="navbar-brand" href="/home">
+        <img class="logo"
+             src="/Assets/logoSpringBoot.png"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item-sb active ">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item-sb ">
+                <a class="nav-link" href="/leaderboard">Leaderboard</a>
+            </li>
+            <li class="nav-item-sb">
+                <a class="nav-link" href="/profile">
+                    <span th:text="${nameNavbar}"></span>
+                    <img class="profile-pic" th:src="@{'/avatar/'+${user.profilePictureName}}"/></a>
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
+            <button type="submit" class="btn btn-outline-danger my-2 my-sm-0"
+            >Log Out
+            </button>
+        </form>
+    </div>
+</nav>
+<!-- BOX PROGRESS -->
+<div id="container-2">
+    <p
+            style="font-size: 24px; color: white; font-weight: bold; text-align: center; margin-top: 10px;margin-bottom: 50px;">
+        My Progress</p>
+    <div id="wrapper">
+        <div id="wrapper-row">
+            <div id="wrapper-content">
+                <div class="row progress-title justify-content-center align-items-center" style="margin: 0;">
+                    <p th:text="${chapter.get(0).chapterTitle}"></p>
+                </div>
+                <div id="status1" class="row progress-text justify-content-center align-items-center"
+                     style="margin: 0;">
+                    <p th:text="${accountChapter.get(0).status}"></p>
+                </div>
+            </div>
+            <div id="wrapper-content">
+                <div class="row progress-title justify-content-center align-items-center" style="margin: 0;">
+                    <p th:text="${chapter.get(1).chapterTitle}"></p>
+                </div>
+                <div id="status2" class="row progress-text justify-content-center align-items-center"
+                     style="margin: 0;">
+                    <p th:text="${accountChapter.get(1).status}"></p>
+                </div>
+            </div>
+            <div id="wrapper-content">
+                <div class="row progress-title justify-content-center align-items-center" style="margin: 0;">
+                    <p th:text="${chapter.get(2).chapterTitle}"></p>
+                </div>
+                <div id="status3" class="row progress-text justify-content-center align-items-center"
+                     style="margin: 0;">
+                    <p th:text="${accountChapter.get(2).status}"></p>
+                </div>
+            </div>
+            <div id="wrapper-content">
+                <div class="row progress-title justify-content-center align-items-center" style="margin: 0;">
+                    <p th:text="${chapter.get(3).chapterTitle}"></p>
+                </div>
+                <div id="status4" class="row progress-text justify-content-center align-items-center"
+                     style="margin: 0;">
+                    <p th:text="${accountChapter.get(3).status}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end box progress -->
+
+<!-- box chapter -->
+<div class="row justify-content-center" style="margin: 0;">
+    <div class="bigbox-chapter">
+        <div class="row justify-content-center align-items-center">
+            <div class="box-chapter">
+                <div class="row" style="margin: 0;">
+                    <div class="col">
+                        <div class="row title-chapter">
+                            <p th:text="${chapter.get(0).chapterTitle}"></p>
+                        </div>
+                        <hr class="horizontal-line-desktop">
+                        <div class="row description-chapter">
+                            <p class="p-description-chapter">
+                                Chapter ini akan mempelajari terkait dasar-dasar Springboot mulai dari apa itu
+                                Springboot, bahasa pemrograman yang didukung, penggunaan springboot pada pengembangan
+                                microservices dan kelebihan penggunaan framework Springboot dibandingkan framework lain.
+                        </div>
+                        <div class="row" style="width: 95%;margin-bottom: 20px;">
+                            <div style="position: relative;">
+                                <div class="col-md-12">
+                                    <a class="btn-mulai" id="mulai1" href="/chapter1Mulai">Mulai</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lihat" id="lihat1" href="/chapter1Lihat">Lihat</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lanjutkan" id="lanjutkan1" href="/chapter1Mulai">Lanjutkan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="box-chapter">
+                <div class="row" style="margin: 0;">
+                    <div class="col">
+                        <div class="row title-chapter">
+                            <p th:text="${chapter.get(1).chapterTitle}"></p>
+                        </div>
+                        <hr class="horizontal-line-desktop">
+                        <div class="row description-chapter">
+                            <p class="p-description-chapter">
+                                Chapter ini akan mulai mempelajari lebih dalam terkait Springboot mulai dari dependency
+                                pada Springboot, lokasi pengelolan dependency pada framework Springboot, penggunaan
+                                annotation atau anotasi untuk memudahkan developer dalam pengembangan aplikasi serta
+                                bagaimana membuat dan menghasilkan sebuah framework Springboot yang siap digunakan.
+                        </div>
+                        <div class="row" style="width: 95%;margin-bottom: 20px;">
+                            <div style="position: relative;">
+                                <div class="col-md-12">
+                                    <a class="btn-mulai" id="mulai2" href="/chapter2Mulai">Mulai</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lihat" id="lihat2" href="/chapter2Lihat">Lihat</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lanjutkan" id="lanjutkan2" href="/chapter2Mulai">Lanjutkan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="box-chapter">
+                <div class="row" style="margin: 0;">
+                    <div class="col">
+                        <div class="row title-chapter">
+                            <p th:text="${chapter.get(2).chapterTitle}"></p>
+                        </div>
+                        <hr class="horizontal-line-desktop">
+                        <div class="row description-chapter">
+                            <p class="p-description-chapter">
+                                Chapter ini akan mempelajari terkait hubungan antara framework Springboot dan database.
+                                Materi akan dimulai dari menyiapkan dependency terkait database pada Springboot,
+                                melakukan konfigurasi awal untuk koneksi ke database, membuat class Entity untuk
+                                mengelola data yang terhubung dengan database, dan membuat repository class yang
+                                merupakan perantara antara entity class dan service class.
+                        </div>
+                        <div class="row" style="width: 95%;margin-bottom: 20px;">
+                            <div style="position: relative;">
+                                <div class="col-md-12">
+                                    <a class="btn-mulai" id="mulai3" href="/chapter3Mulai">Mulai</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lihat" id="lihat3" href="/chapter3Lihat">Lihat</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lanjutkan" id="lanjutkan3" href="chapter3Mulai">Lanjutkan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="box-chapter">
+                <div class="row" style="margin: 0;z-index: -1;">
+                    <div class="col">
+                        <div class="row title-chapter">
+                            <p th:text="${chapter.get(3).chapterTitle}"></p>
+                        </div>
+                        <hr class="horizontal-line-desktop">
+                        <div class="row description-chapter">
+                            <p class="p-description-chapter">
+                                Chapter ini akan mempelajari terkait penerapan metode CRUD (Create, Read, Update,
+                                Delete) pada database menggunakan framework Springboot. Materi akan menjelaskan terkait
+                                penggunaan fungsi otomatis dari class repository, dan penggunaan anotasi yang dibutuhkan
+                                saat ingin menghubungkan repository dan service
+                        </div>
+                        <div class="row" style="width: 95%;margin-bottom: 20px;">
+                            <div style="position: relative;">
+                                <div class="col-md-12">
+                                    <a class="btn-mulai" id="mulai4" href="/chapter4Mulai">Mulai</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lihat" id="lihat4" href="/chapter4Lihat">Lihat</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn-lanjutkan" id="lanjutkan4" href="/chapter4Mulai">Lanjutkan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;">
+        <h5 style="color: white;margin-top: 20px;">Contact Us</h5>
+    </div>
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;height: 70px;">
+        <a href="mailto:springbootlearn9@gmail.com">
+            <p style="font-size: 14px;">springbootlearn9@gmail.com</p>
+        </a>
+    </div>
+    <div class="row justify-content-center align-items-center"
+         style="background-color: rgb(0, 0, 0); margin-top: 20px;width: 100%;margin:0">
+        <p class="text-muted" style="padding: 5px;font-size: 14px;">Copyright @2024 All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script th:inline="javascript">
+    var mulai1 = document.getElementById('mulai1');
+    var lihat1 = document.getElementById('lihat1');
+    var lanjutkan1 = document.getElementById('lanjutkan1');
+
+    var mulai2 = document.getElementById('mulai2');
+    var lihat2 = document.getElementById('lihat2');
+    var lanjutkan2 = document.getElementById('lanjutkan2');
+
+    var mulai3 = document.getElementById('mulai3');
+    var lihat3 = document.getElementById('lihat3');
+    var lanjutkan3 = document.getElementById('lanjutkan3');
+
+    var mulai4 = document.getElementById('mulai4');
+    var lihat4 = document.getElementById('lihat4');
+    var lanjutkan4 = document.getElementById('lanjutkan4');
+
+    var status1 = /*[[${accountChapter.get(0).status}]]*/ '';
+    var status2 = /*[[${accountChapter.get(1).status}]]*/ '';
+    var status3 = /*[[${accountChapter.get(2).status}]]*/ '';
+    var status4 = /*[[${accountChapter.get(3).status}]]*/ '';
+
+    var firstIncomplete = /*[[${firstIncomplete}]]*/ '';
+    var checkButtonMulai = "mulai" + firstIncomplete;
+    var checkButtonLihat = "lihat" + firstIncomplete;
+
+    if (checkButtonMulai === "mulai1") {
+        lihat1.style.display = 'none';
+        lanjutkan1.style.display = 'none';
+
+        lihat2.style.display = 'none';
+        lanjutkan2.style.display = 'none';
+        mulai2.style.pointerEvents = 'none';
+        mulai2.style.backgroundColor = 'gray';
+
+        lihat3.style.display = 'none';
+        lanjutkan3.style.display = 'none';
+        mulai3.style.pointerEvents = 'none';
+        mulai3.style.backgroundColor = 'gray';
+
+        lihat4.style.display = 'none';
+        lanjutkan4.style.display = 'none';
+        mulai4.style.pointerEvents = 'none';
+        mulai4.style.backgroundColor = 'gray';
+    }
+    if (checkButtonMulai === "mulai2") {
+        if(status1 === "In Progress"){
+            mulai1.style.display ='none';
+            lihat1.style.display ='none';
+
+            lihat2.style.display = 'none';
+            mulai2.style.pointerEvents = 'none';
+            lanjutkan2.style.display = 'none';
+            mulai2.style.backgroundColor = 'gray';
+
+            lihat3.style.display = 'none';
+            mulai3.style.pointerEvents = 'none';
+            lanjutkan3.style.display = 'none';
+            mulai3.style.backgroundColor = 'gray';
+
+            lihat4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            lanjutkan4.style.display = 'none';
+            mulai4.style.backgroundColor = 'gray';
+
+        }else if (status1 === "Complete") {
+            lihat2.style.display = 'none';
+            lanjutkan2.style.display = 'none';
+
+            lanjutkan1.style.display = 'none';
+            mulai1.style.display = 'none';
+
+            lihat3.style.display = 'none';
+            mulai3.style.pointerEvents = 'none';
+            lanjutkan3.style.display = 'none';
+            mulai3.style.backgroundColor = 'gray';
+
+            lihat4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            lanjutkan4.style.display = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        } else {
+            lihat2.style.display = 'none';
+            lanjutkan2.style.display = 'none';
+            mulai2.style.pointerEvents = 'none';
+            mulai2.style.backgroundColor = 'gray';
+
+            lihat3.style.display = 'none';
+            lanjutkan3.style.display = 'none';
+            mulai3.style.pointerEvents = 'none';
+            mulai3.style.backgroundColor = 'gray';
+
+            lihat4.style.display = 'none';
+            lanjutkan4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        }
+    }
+    if (checkButtonMulai === "mulai3") {
+        if(status2 === "In Progress"){
+            mulai1.style.display = 'none';
+            lanjutkan1.style.display ='none';
+
+            mulai2.style.display ='none';
+            lihat2.style.display ='none';
+
+            lihat3.style.display = 'none';
+            lanjutkan3.style.display = 'none';
+            mulai3.style.pointerEvents = 'none';
+            mulai3.style.backgroundColor = 'gray';
+
+            lihat4.style.display = 'none';
+            lanjutkan4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        } else if (status2 === "Complete") {
+            mulai1.style.display = 'none';
+            lanjutkan1.style.display = 'none';
+
+            mulai2.style.display = 'none';
+            lanjutkan2.style.display = 'none';
+
+            lihat3.style.display = 'none';
+            lanjutkan3.style.display = 'none';
+
+            lihat4.style.display = 'none';
+            lanjutkan4.style.display = 'none'
+            mulai4.style.pointerEvents = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        } else {
+            mulai1.style.display = 'none';
+            mulai2.style.display = 'none';
+
+            lihat3.style.display = 'none';
+            mulai3.style.pointerEvents = 'none';
+            mulai3.style.backgroundColor = 'gray';
+
+            lihat4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        }
+    }
+    if (checkButtonMulai === "mulai4") {
+        if(status3 === "In Progress"){
+            lanjutkan1.style.display = 'none';
+            lanjutkan2.style.display = 'none'
+            mulai3.style.display = 'none';
+            lihat3.style.display = 'none';
+
+            lihat4.style.display = 'none';
+            lanjutkan4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        }else if (status3 === "Complete") {
+            if(status4 === "In Progress"){
+                lihat4.style.display = 'none';
+                mulai4.style.display = 'none';
+
+                mulai2.style.display = 'none';
+                lanjutkan2.style.display = 'none';
+
+                mulai3.style.display = 'none';
+                lanjutkan3.style.display = 'none';
+
+                mulai1.style.display = 'none';
+                lanjutkan1.style.display = 'none';
+            }else if (status4 === "Complete") {
+                mulai4.style.display = 'none';
+                mulai1.style.display = 'none';
+                mulai2.style.display = 'none';
+                mulai3.style.display = 'none';
+
+                lanjutkan1.style.display = 'none';
+                lanjutkan2.style.display = 'none';
+                lanjutkan3.style.display = 'none';
+                lanjutkan4.style.display = 'none';
+            } else if (status4 === "Incomplete") {
+                lihat4.style.display = 'none';
+                lanjutkan4.style.display = 'none';
+
+                mulai2.style.display = 'none';
+                lanjutkan2.style.display = 'none';
+
+                mulai3.style.display = 'none';
+                lanjutkan3.style.display = 'none';
+
+                mulai1.style.display = 'none';
+                lanjutkan1.style.display = 'none';
+            }
+        } else {
+            mulai3.style.display = 'none';
+            mulai2.style.display = 'none';
+            mulai1.style.display = 'none';
+
+            lihat4.style.display = 'none';
+            mulai4.style.pointerEvents = 'none';
+            mulai4.style.backgroundColor = 'gray';
+        }
+    }
+    if (status1 === "Complete") {
+        mulai1.style.display = 'none';
+    }
+    if (status2 === "Complete") {
+        mulai2.style.display = 'none';
+    }
+    if (status3 === "Complete") {
+        mulai3.style.display = 'none';
+    }
+    if(status4 === "Complete"){
+        mulai4.style.display = 'none';
+    }
+
+
+    function changeColor() {
+        var status1 = document.getElementById('status1').querySelector("p");
+        var status2 = document.getElementById('status2').querySelector("p");
+        var status3 = document.getElementById('status3').querySelector("p");
+        var status4 = document.getElementById('status4').querySelector("p");
+
+        if (status1.textContent.trim() === 'Complete') {
+            status1.style.color = "#066D17";
+        } else if (status1.textContent.trim() === 'Incomplete') {
+            status1.style.color = "#FF0909";
+        } else if(status1.textContent.trim() === 'In Progress'){
+            status1.style.color = "#ECAA00";
+        }
+
+        if (status2.textContent.trim() === 'Complete') {
+            status2.style.color = "#066D17";
+        } else if (status2.textContent.trim() === 'Incomplete') {
+            status2.style.color = "#FF0909";
+        } else if(status2.textContent.trim() === 'In Progress'){
+            status2.style.color = "#ECAA00";
+        }
+
+        if (status3.textContent.trim() === 'Complete') {
+            status3.style.color = "#066D17";
+        } else if (status3.textContent.trim() === 'Incomplete') {
+            status3.style.color = "#FF0909";
+        }else if(status3.textContent.trim() === 'In Progress'){
+            status3.style.color = "#ECAA00";
+        }
+
+        if (status4.textContent.trim() === 'Complete') {
+            status4.style.color = "#066D17";
+        } else if (status4.textContent.trim() === 'Incomplete') {
+            status4.style.color = "#FF0909";
+        }else if(status4.textContent.trim() === 'In Progress'){
+            status4.style.color = "#ECAA00";
+        }
+    }
+    window.onload = function () {
+        changeColor();
+    }
+</script>
+</body>
+
+</html>

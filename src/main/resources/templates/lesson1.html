@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lessons.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a59b9b09ab.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>Spring Boot Learn</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #070F2B; font-weight:bold;width: 100%;">
+    <a class="navbar-brand" href="/home">
+        <img class="logo" src="/Assets/logoSpringBoot.png"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item-sb ">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item-sb ">
+                <a class="nav-link" href="/leaderboard">Leaderboard</a>
+            </li>
+            <li class="nav-item-sb">
+                <a class="nav-link" href="/profile">
+                    <span th:text="${user.name}"></span>
+                    <img class="profile-pic" th:src="@{'/avatar/'+${user.profilePictureName}}"/></a>
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
+            <button type="submit" class="btn btn-outline-danger my-2 my-sm-0">Log Out
+            </button>
+        </form>
+    </div>
+</nav>
+<!-- START BOX MATERI -->
+<div class="row justify-content-center align-items-center" style="margin: 0;">
+    <div class="box-lesson">
+        <div class="row align-items-center heading-materi" style="margin: 0;">
+            <div class="col-md-3">
+                <div class="backBtn">
+                    <a style="color: white; font-size: 14px;font-weight: bold;" href="/home"><img
+                            src="/Assets/kembali.png" style="width: 25px;margin-right: 10px;">Kembali</a>
+                </div>
+            </div>
+
+            <div class="col-md-9" style="margin: 0;padding: 0;">
+                <div class="d-flex justify-content-end" style="margin: 0;">
+                    <div class="coin text-center">
+                        <img src="/Assets/coin.png" style="width: 25px;"/>
+                        <span th:text="${user.gold}"></span>
+                    </div>
+                    <div class="life text-center">
+                        <div th:each="i : ${#numbers.sequence(1, 3)}" th:remove="tag">
+                            <!-- If i is less than or equal to the count from the database -->
+                            <img th:if="${i le user.life}" th:id="'image' + ${i}" th:src="@{/Assets/Life.png}"
+                                 alt="Image" style="width: 25px; margin-left: 5px;"/> <!-- Example style -->
+                            <!-- If i is greater than the count from the database -->
+                            <img th:if="${i gt user.life}" id="other-image" th:src="@{/Assets/emptyLife.png}"
+                                 alt="Other Image" style="width: 25px; margin-left: 5px;"/> <!-- Example style -->
+                        </div>
+                    </div>
+
+                    <!-- Additional content -->
+                    <img th:if="${user.life < 3}" id="addLife" src="/Assets/add.png" data-target="#modalTambahLife"
+                         data-toggle="modal" style="cursor:pointer;width: 25px;"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="soal1" class="displayLesson show">
+            <div class="row justify-content-center align-items-center lesson-title" style="margin: 0;">
+                Basic - basic Springboot 1 (1/3)
+            </div>
+
+            <div class="row justify-content-center align-items-center" style="margin:0">
+                <div class="box-materi">
+                    Springboot merupakan sebuah framework (kerangka kerja) berbasis bahasa pemrograman Java yang
+                    memungkinkan developer untuk tidak atau sedikit melakukan konfigurasi pengembangan aplikasi
+                    sehingga proses pengembangan aplikasi menjadi lebih cepat. Saat ini, Springboot tidak hanya
+                    mendukung bahasa pemrograman Java, tetapi juga mendukung bahasa pemrograman Kotlin.
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center" style="margin: 0;">
+                <div class="box-question">
+                    <form class="answerForm" id="form1">
+                        <div class="form-group">
+                            <p></p>
+
+                            <label for="question" th:text="${lessons1.get(0).questions}"></label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="a1" value="a">
+                                <label class="form-check-label" for="option1">a. Java dan C</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="b1" value="b">
+                                <label class="form-check-label" for="option2">b. PHP dan Kotlin</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="c1" value="c">
+                                <label class="form-check-label" for="option3">c. Golang dan Kotlin</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="d1" value="d">
+                                <label class="form-check-label" for="option4">d. Java dan Kotlin</label>
+                            </div>
+                            <input type="hidden" id="lessonId0" th:value="${lessons1.get(0).lessonId}">
+                            <input type="hidden" id="answerLesson0" th:value="${lessons1.get(0).answers}">
+
+                        </div>
+
+                        <div class="lesson-Btn">
+                            <div id="cekJawaban1" class="displayBtn active" data-target="#modalCekJawaban">
+                                <button id="checkAnswerButton1" type="button"
+                                        class="btn button-edit btn-block btnCheckAns"
+                                        onclick="checkJawaban(this, 'form1')" disabled>Cek
+                                    Jawaban
+                                </button>
+                            </div>
+                            <div id="afterJawaban1" class="displayBtn">
+                                <div class="prevButton">
+                                    <button id="leftButton" class="btn button-edit" disabled>
+                                        << Sebelumnya
+                                    </button>
+                                </div>
+                                <div class="nextButton">
+                                    <button id="rightButton" class="btn button-edit" type="button"
+                                            onclick="nextToLesson2()">Selanjutnya >>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="soal2" class="displayLesson">
+            <div class="row justify-content-center align-items-center lesson-title" style="margin: 0;">
+                Basic - basic Springboot 1 (2/3)
+            </div>
+
+            <div class="row justify-content-center align-items-center" style="margin:0">
+                <div class="box-materi">
+                    Microservices merupakan sebuah arsitektur pengembangan aplikasi yang dimana sebuah aplikasi
+                    dibagi menjadi beberapa service untuk melakukan tugas masing-masing. Keuntungan dari
+                    microservices ini adalah mudahnya pemeliharaan apabila terdapat sebuah error atau bug pada
+                    sebuah fitur tertentu. Developer hanya perlu melihat fitur tersebut terletak pada service apa
+                    dan hanya perlu bekerja pada service tersebut tanpa mengganggu service lain. Framework
+                    Springboot sangat mendukung pengembangan arsitektur Microservices karena springboot lebih mudah
+                    untuk dikonfigurasi, fitur-fitur springboot seperti keamanan, koneksi ke database, pengaturan
+                    transaksi, dan lain-lain. Selain fitur, springboot juga memiliki komunitas yang besar sehingga
+                    sumber daya untuk beberapa masalah lebih cepat terselesaikan.
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center" style="margin: 0;">
+                <div class="box-question">
+                    <form class="answerForm" id="form2">
+                        <div class="form-group">
+                            <label for="question" th:text="${lessons1.get(1).questions}"></label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="a2" value="a">
+                                <label class="form-check-label" for="option1">a. Karena framework springboot lebih
+                                    mudah untuk dikonfigurasi serta memiliki fitur-fitur yang mendukung.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="b2" value="b">
+                                <label class="form-check-label" for="option2">b. Karena framework springboot memiliki
+                                    fitur yang berlawanan dengan arsitektur microservice</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="c2" value="c">
+                                <label class="form-check-label" for="option3">c. Karena springboot memiliki
+                                    komunitas
+                                    yang sangat kecil, sehingga menyulitkan apabila terjadi kendala.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="d2" value="d">
+                                <label class="form-check-label" for="option4">d. Karena springboot harus melakukan
+                                    konfigurasi yang sangat sulit untuk pengembangan microservice</label>
+                            </div>
+                            <input type="hidden" id="lessonId1" th:value="${lessons1.get(1).lessonId}">
+                            <input type="hidden" id="answerLesson1" th:value="${lessons1.get(1).answers}">
+                        </div>
+
+                        <div class="lesson-Btn">
+                            <div id="cekJawaban2" class="displayBtn active" data-target="#modalCekJawaban">
+                                <button id="checkAnswerButton2" type="button"
+                                        class="btn button-edit btn-block btnCheckAns"
+                                        onclick="checkJawaban(this, 'form2')" disabled>Cek
+                                    Jawaban
+                                </button>
+                            </div>
+                            <div id="afterJawaban2" class="displayBtn">
+                                <div class="prevButton">
+                                    <button id="leftButton" class="btn button-edit" type="button"
+                                            onclick="previousToLesson1()">
+                                        << Sebelumnya
+                                    </button>
+                                </div>
+                                <div class="nextButton">
+                                    <button id="rightButton" class="btn button-edit" type="button"
+                                            onclick="nextToLesson3()">Selanjutnya >>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="soal3" class="displayLesson">
+            <div class="row justify-content-center align-items-center lesson-title" style="margin: 0;padding: 0;">
+                Basic - basic Springboot 1 (3/3)
+            </div>
+
+            <div class="row justify-content-center align-items-center" style="margin:0">
+                <div class="box-materi">
+                    Framework Springboot memiliki beberapa kelebihan dibandingkan framework lain, diantaranya
+                    adalah : <br><br>
+                    1. springboot memiliki server yang tersedia seperti Tomcat, sehingga developer tidak perlu
+                    menyiapkan server.<br>
+                    2. Menggunakan maven sebagai build manager karena maven memiliki beberapa kelebihan dibandingkan
+                    build manager lain.<br>
+                    3. Memiliki anotasi-anotasi untuk pengembangan seperti @Autowired yang digunakan untuk melakukan
+                    injeksi dependency otomatis ke class tujuan, @Get/PostMapping yang digunakan untuk mengurangi
+                    handler terkait metode pengiriman data.
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center" style="margin: 0;">
+                <div class="box-question">
+                    <form class="answerForm" id="form3">
+                        <div class="form-group">
+                            <label for="question" th:text="${lessons1.get(2).questions}"></label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="a" value="a">
+                                <label class="form-check-label" for="option1">a. Developer perlu menyiapkan server
+                                    sendiri karena springboot tidak memiliki server langsung</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="b" value="b">
+                                <label class="form-check-label" for="option2">b. Menggunakan Ant sebagai build
+                                    Manager</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="c" value="c">
+                                <label class="form-check-label" for="option3">c. Memiliki anotasi-anotasi yang dapat
+                                    membantu proses pengembangan aplikasi.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="d" value="d">
+                                <label class="form-check-label" for="option4">d. Tidak menggunakan Maven sebagai
+                                    build
+                                    manager.</label>
+                            </div>
+                            <input type="hidden" id="lessonId2" th:value="${lessons1.get(2).lessonId}">
+                            <input type="hidden" id="answerLesson2" th:value="${lessons1.get(2).answers}">
+                        </div>
+
+                        <div class="lesson-Btn">
+                            <div id="cekJawaban3" class="displayBtn active" data-target="#modalCekJawaban">
+                                <button id="checkAnswerButton3" type="button"
+                                        class="btn button-edit btn-block btnCheckAns"
+                                        onclick="checkJawaban(this,'form3')" disabled>Cek
+                                    Jawaban
+                                </button>
+                            </div>
+                            <div id="afterJawaban3" class="displayBtn">
+                                <div class="prevButton">
+                                    <button id="leftButton" class="btn button-edit" type="button"
+                                            onclick="previousToLesson2()">
+                                        << Sebelumnya
+                                    </button>
+                                </div>
+                                <div class="nextButton">
+                                    <button id="rightButton" class="btn button-edit" type="button"
+                                            onclick="finish()">Finish
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<!-- MODAL Tambah Life -->
+<div class="modal fade" id="modalTambahLife" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Konfirmasi
+                    Penambahan Kesempatan</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p>Tambah 1 kesempatan?</p>
+                <p>Harga : <img src="/Assets/coin.png" style="width: 20px;"/> 200</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Tambah</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL PEMBELIAN LIFE -->
+
+<!-- MODAL CEK JAWABAN Benar -->
+<div class="modal fade" id="modalCekJawabanBenar" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Jawaban
+                    Anda
+                    Benar</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img style="width: 300px;" src="/Assets/True.png">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL CEK JAWABAN Benar -->
+
+<!-- MODAL CEK JAWABAN Salah -->
+<div class="modal fade" id="modalCekJawabanSalah" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Jawaban
+                    Anda
+                    Salah</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img style="width: 300px;" src="/Assets/False.png">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL CEK JAWABAN Salah -->
+
+
+<footer class="footer">
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;">
+        <h5 style="color: white;margin-top: 20px;">Contact Us</h5>
+    </div>
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;height: 70px;">
+        <a href="mailto:springbootlearn9@gmail.com">
+            <p style="font-size: 14px;">springbootlearn9@gmail.com</p>
+        </a>
+    </div>
+    <div class="row justify-content-center align-items-center"
+         style="background-color: rgb(0, 0, 0); margin-top: 20px;width: 100%;margin:0">
+        <p class="text-muted" style="padding: 5px;font-size: 14px;">Copyright @2024 All Rights Reserved.</p>
+    </div>
+</footer>
+<script th:inline="javascript">
+    // NEXT TO ANOTHER LESSON
+    function nextToLesson2() {
+        var soal1 = document.getElementById('soal1');
+        var soal2 = document.getElementById('soal2');
+        soal1.classList.remove('show');
+        soal2.classList.add('show');
+    }
+    function nextToLesson3() {
+        var soal2 = document.getElementById('soal2');
+        var soal3 = document.getElementById('soal3');
+        soal2.classList.remove('show');
+        soal3.classList.add('show');
+    }
+    function previousToLesson1() {
+        var soal1 = document.getElementById('soal1');
+        var soal2 = document.getElementById('soal2');
+        soal2.classList.remove('show');
+        soal1.classList.add('show');
+    }
+    function previousToLesson2() {
+        var soal2 = document.getElementById('soal2');
+        var soal3 = document.getElementById('soal3');
+        soal3.classList.remove('show');
+        soal2.classList.add('show');
+    }
+    function finish() {
+        window.location.href = "/home";
+    }
+    var ansDb;
+    var selectedValue;
+    function checkJawaban(button, formId) {
+        ansDb = null;
+        selectedValue = null;
+        var status;
+        const BtnId = button.id.slice(-1) - 1;
+        const form = document.getElementById(formId);
+        const userAns = form.querySelectorAll('input[name="answer"]');
+        ansDb = document.getElementById('answerLesson' + BtnId).value;
+        var lessonId = document.getElementById('lessonId' + BtnId).value;
+        for (var i = 0; i < userAns.length; i++) {
+            if (userAns[i].checked) {
+                // If a radio button is checked, get its value
+                selectedValue = userAns[i].value;
+                break; // Exit the loop if a checked radio button is found
+            }
+        }
+        var target;
+        if (ansDb === selectedValue) {
+            target = "#modalCekJawabanBenar"; // Correct answer modal
+            status = "True"
+        } else {
+            target = "#modalCekJawabanSalah"; // Incorrect answer modal
+            status = "False"
+
+        }
+        $(target).modal('show');
+
+        $(target).on('hidden.bs.modal', function (e) {
+            replaceButtonCekJawaban(BtnId+1);
+        });
+        userAns.forEach(function(radioButton) {
+            radioButton.disabled = true;
+        });
+
+        var dataToSend = {
+            answersDb: ansDb,
+            lessonId: lessonId,
+            answerUser: selectedValue,
+            status : status
+        };
+        sendDataToController(dataToSend);
+    }
+
+    function sendDataToController(data) {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/InputDataLesson",
+            data: JSON.stringify(data),
+            success: function(response) {
+                // Handle success response from the server
+            },
+            error: function(xhr, status, error) {
+                // Handle error response from the server
+                console.error("Error sending data: " + error);
+            }
+        });
+    }
+
+
+    // function CHANGE BUTTON after modal
+
+    function replaceButtonCekJawaban(id) {
+        var IdBtnCekJawaban = "cekJawaban" + id;
+        var IdBtnAfterJawaban = "afterJawaban" + id;
+        var BtnCekJawaban = document.getElementById(IdBtnCekJawaban);
+        var BtnAfterJawaban = document.getElementById(IdBtnAfterJawaban);
+        BtnCekJawaban.classList.remove('active'); //remove active class
+        BtnAfterJawaban.classList.add('active'); //add active class
+    }
+    // END MODAL CHANGE BUTTON
+
+    //HIGHLIGHT TRUE ANSWER
+    document.querySelectorAll('.btnCheckAns').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var form = this.closest('.answerForm'); // Find the parent form
+
+            // Here you can make an AJAX call to fetch data from the server
+            // For demonstration purposes, let's assume the value is retrieved synchronously
+            var valueFromDatabase = ansDb; // Function to fetch value from database
+
+            // Get the radio button corresponding to the value from the database
+            var radioToHighlight = form.querySelector('input[name="answer"][value="' + valueFromDatabase + '"]');
+
+            // Remove highlight class from all radio buttons within the form
+            form.querySelectorAll('input[name="answer"]').forEach(function (radio) {
+                radio.parentElement.classList.remove('highlight-radio');
+            });
+
+            // Add highlight class to the selected radio button within the form
+            if (radioToHighlight) {
+                radioToHighlight.parentElement.classList.add('highlight-radio');
+            }
+        });
+    });
+
+    //function to disable button by default and enable it when radio button filled
+    document.addEventListener("DOMContentLoaded", function () {
+        const answerForms = document.querySelectorAll('.answerForm');
+
+        answerForms.forEach(function (form) {
+            const btnCheckAns = form.querySelector('.btnCheckAns');
+            const radioButtons = form.querySelectorAll('input[type="radio"]');
+
+            // Function to enable/disable the button based on radio button selection
+            function toggleCekJawabanButton() {
+                let checked = false;
+                radioButtons.forEach(function (radioButton) {
+                    if (radioButton.checked) {
+                        checked = true;
+                    }
+                });
+                btnCheckAns.disabled = !checked;
+            }
+
+            // Add event listener to radio buttons
+            radioButtons.forEach(function (radioButton) {
+                radioButton.addEventListener("change", toggleCekJawabanButton);
+            });
+
+            // Initial check for enabling/disabling the button
+            toggleCekJawabanButton();
+        });
+    });
+
+</script>
+</body>
+
+
+</html>

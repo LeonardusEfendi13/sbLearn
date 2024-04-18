@@ -1,0 +1,141 @@
+package com.project.sbLearn.Controller;
+
+import com.project.sbLearn.Entity.AccountEntity;
+import com.project.sbLearn.Entity.AccountLessonEntity;
+import com.project.sbLearn.Entity.ChapterEntity;
+import com.project.sbLearn.Repository.AccountLessonRepository;
+import com.project.sbLearn.Repository.AccountRepository;
+import com.project.sbLearn.Service.ChapterService;
+import com.project.sbLearn.Service.LessonService;
+import com.project.sbLearn.Service.LoginService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class Lesson2Controller {
+    @Autowired
+    LessonService lessonService;
+
+    @Autowired
+    LoginService loginService;
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    ChapterService chapterService;
+    @Autowired
+    AccountLessonRepository accountLessonRepository;
+
+    private List<AccountLessonEntity> accountLessonEntityList = new ArrayList<>();
+    @GetMapping("/saveDataLessonC2")
+    public String saveDataC2(HttpSession session){
+        accountLessonRepository.saveAll(accountLessonEntityList);
+        System.out.println("SUCCESS SAVE account LESSON DATABASE");
+        accountLessonEntityList.clear();
+        System.out.println("SUCCESS CLEAR LIST");
+        ChapterEntity chapterEntity = chapterService.getChapterId(2);
+        AccountEntity accountEntity = loginService.getNameFromLogin((String) session.getAttribute("username"));
+        String uid = accountEntity.getUid();
+        String cid = chapterEntity.getCId();
+        chapterService.setChapterStatus(uid, cid, "Complete");
+        return "redirect:/home";
+    }
+    @PostMapping("/InputDataLessonC2")
+    public ResponseEntity<String> checkJawaban(@RequestBody AccountLessonEntity data, HttpSession session){
+        AccountEntity accountEntity = loginService.getNameFromLogin((String) session.getAttribute("username"));
+        ChapterEntity chapterEntity = chapterService.getChapterId(2);
+        String cid = chapterEntity.getCId();
+        String uid = accountEntity.getUid();
+        chapterService.setChapterStatus(uid, cid, "In Progress");
+        System.out.println("LESSON ID FROM JS : " + data.getLessonId());
+        System.out.println("ANSWER DB FROM JS : " + data.getAnswersDb());
+        System.out.println("ANSWER USER FROM JS : " + data.getAnswerUser());
+        System.out.println("STATUS FROM JS : " + data.getStatus());
+        lessonService.saveLessonToAccountLesson(uid, data.getLessonId(), data.getAnswersDb(), data.getAnswerUser(), data.getStatus());
+        lessonService.updateAccount(uid, data.getStatus(), data.getLessonId());
+        AccountLessonEntity accountLessonEntity = accountLessonRepository.findByUserIdAndLessonId(uid, data.getLessonId());
+        String ansFromUser = accountLessonEntity.getAnswerUser();
+        String ansFromDb = accountLessonEntity.getAnswersDb();
+        session.setAttribute("ansFromUser", ansFromUser);
+        session.setAttribute("ansFromDb", ansFromDb);
+        System.out.println("success now go back to controller");
+        return ResponseEntity.ok("Saved Data Lesson ID : " + data.getLessonId());
+    }
+    @GetMapping("/Chapter2/Lesson1/Show")
+    public String showLesson1Chapter2(HttpSession session, Model model) {
+        AccountEntity user = accountRepository.findByUsername((String) session.getAttribute("username"));
+        AccountLessonEntity accountLessonEntity1 = accountLessonRepository.findByUserIdAndLessonId(user.getUid(),"fbbc83d9-f3fe-11ee-9b08-047c16a4fc60");
+        model.addAttribute("lessons2", session.getAttribute("lessons2"));
+        if("lihat".equalsIgnoreCase((String) session.getAttribute("lihatc2"))){
+            model.addAttribute("ansFromUser", accountLessonEntity1.getAnswerUser());
+            model.addAttribute("ansFromDb", accountLessonEntity1.getAnswersDb());
+        }else if("tidakLihat".equalsIgnoreCase((String) session.getAttribute("lihatc2"))){
+            model.addAttribute("ansFromUser", session.getAttribute("ansFromUser"));
+            model.addAttribute("ansFromDb", session.getAttribute("ansFromDb"));
+        }
+        model.addAttribute("user", user);
+        AccountLessonEntity accountLessonEntity2 = accountLessonRepository.findByUserIdAndLessonId(user.getUid(),"fbbc842a-f3fe-11ee-9b08-047c16a4fc60");
+        if(accountLessonEntity2 == null ){
+            session.setAttribute("lihatc2", "tidakLihat");
+            model.addAttribute("lihatc2", session.getAttribute("lihatc2"));
+            System.out.println("GAADA DATA chapter 1 lesson 2 di c2l1");
+        }else {
+            model.addAttribute("lihatc2", session.getAttribute("lihatc2"));
+            System.out.println("ADA DATA chapter 1 lesson 2 di c2l1");
+        }
+        return "c2Lesson1Answer";
+    }
+
+    @GetMapping("/Chapter2/Lesson2/Show")
+    public String showLesson2Chapter2(HttpSession session, Model model) {
+        AccountEntity user = accountRepository.findByUsername((String) session.getAttribute("username"));
+        AccountLessonEntity accountLessonEntity2 = accountLessonRepository.findByUserIdAndLessonId(user.getUid(),"fbbc842a-f3fe-11ee-9b08-047c16a4fc60");
+
+        model.addAttribute("lessons2", session.getAttribute("lessons2"));
+        if("lihat".equalsIgnoreCase((String) session.getAttribute("lihatc2"))){
+            model.addAttribute("ansFromUser", accountLessonEntity2.getAnswerUser());
+            model.addAttribute("ansFromDb", accountLessonEntity2.getAnswersDb());
+        }else if("tidakLihat".equalsIgnoreCase((String) session.getAttribute("lihatc2"))){
+            model.addAttribute("ansFromUser", session.getAttribute("ansFromUser"));
+            model.addAttribute("ansFromDb", session.getAttribute("ansFromDb"));
+        }
+        model.addAttribute("user", user);
+        AccountLessonEntity accountLessonEntity3 = accountLessonRepository.findByUserIdAndLessonId(user.getUid(),"fbbc8471-f3fe-11ee-9b08-047c16a4fc60");
+        if(accountLessonEntity3 == null ){
+            session.setAttribute("lihatc2", "tidakLihat");
+            model.addAttribute("lihatc2", session.getAttribute("lihatc2"));
+            System.out.println("GAADA DATA chapter 1 lesson 3 di c2l1");
+        }else {
+            model.addAttribute("lihatc2", session.getAttribute("lihatc2"));
+            System.out.println("ADA DATA chapter 1 lesson 3 di c2l1");
+        }
+        model.addAttribute("lihatc2", session.getAttribute("lihatc2"));
+        return "c2Lesson2Answer";
+    }
+    @GetMapping("/Chapter2/Lesson3/Show")
+    public String showLesson3Chapter2(HttpSession session, Model model) {
+        AccountEntity user = accountRepository.findByUsername((String) session.getAttribute("username"));
+        AccountLessonEntity accountLessonEntity = accountLessonRepository.findByUserIdAndLessonId(user.getUid(),"fbbc8471-f3fe-11ee-9b08-047c16a4fc60");
+
+        model.addAttribute("lessons2", session.getAttribute("lessons2"));
+        if("lihat".equalsIgnoreCase((String) session.getAttribute("lihatc2"))){
+            model.addAttribute("ansFromUser", accountLessonEntity.getAnswerUser());
+            model.addAttribute("ansFromDb", accountLessonEntity.getAnswersDb());
+        }else if("tidakLihat".equalsIgnoreCase((String) session.getAttribute("lihatc2"))){
+            model.addAttribute("ansFromUser", session.getAttribute("ansFromUser"));
+            model.addAttribute("ansFromDb", session.getAttribute("ansFromDb"));
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("lihatc2", session.getAttribute("lihatc2"));
+        return "c2Lesson3Answer";
+    }
+}

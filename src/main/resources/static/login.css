@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption&display=swap');
+
+*{
+    font-family: 'PT Sans Caption', sans-serif;
+}
+
+.background-auth{
+    background-color: #070F2B;
+}
+.box-signIn{
+    width: 1000px;
+    height: fit-content;
+    background-color: #535C91;
+    color: white;
+    border-radius: 20px;
+}
+.title_page{
+    font-size: 32px;
+    font-weight: bold;
+}
+.subtitle_page{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.vertical-line{
+    border-left: 2px solid white;
+    height: 310px;
+}
+
+.horizontal-line-desktop{
+    border-color: white; 
+    width: 300px;
+}
+
+.horizontal-line-non-desktop{
+    border-color: rgba(255, 255, 255, 0); 
+    width: 300px;
+}
+
+input[type="text"], input[type="password"]{
+    border-radius: 10px;
+}
+
+.button-form{
+    background-color:#7074D3 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    box-shadow: 1px 4px 2px #474747 !important;
+}
+.button-form:hover{
+    background-color:#35387A !important;
+}
+.button-subtitle{
+    background-color: #1B1A55 !important; 
+    border-radius: 20px !important;
+    box-shadow: 1px 4px 2px #474747 !important;
+    color: white !important;
+}
+.button-subtitle:hover{
+    background-color: #5B5A9B !important;
+}
+.lupa-password{
+    color: white !important;
+    font-size: 14px;
+}
+.errorSpringboot{
+    background-color: rgb(198, 54, 54);
+    margin-top: 20px;
+    width: 80%;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+}
+.successSpringboot{
+    background-color: rgb(27, 170, 46);;
+    margin-top: 20px;
+    width: 80%;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .box-signIn{
+        width: 400px;
+    }
+    .horizontal-line-desktop{
+        border-color: rgba(255, 255, 255, 0); 
+        width: 300px;
+    }
+    
+    .horizontal-line-non-desktop{
+        border-color: rgb(255, 255, 255); 
+        width: 300px;
+    }
+    .vertical-line{
+        display: none;
+    }
+    .title_page{
+        font-size: 24px;
+        margin-top: 20px;
+    }
+    .subtitle_page{
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: -20px;
+    }
+    .button-subtitle{
+        padding: 4px 8px !important;
+    }
+    .form-css{
+        font-size: 14px;
+    }
+    input[type="text"], input[type="password"], input[type="email"]{
+        font-size: 14px;
+    }
+    .button-form{
+        font-size: 14px !important;
+    }
+    .lupa-password{
+        color: white !important;
+        font-size: 12px;
+    }
+}

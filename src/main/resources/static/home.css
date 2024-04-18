@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption&display=swap');
+
+*{
+    font-family: 'PT Sans Caption', sans-serif;
+}
+.dashboard{
+    background-color: #ECECEC;
+}
+
+.logo{
+    width: 85px;
+    height: 85px;
+    margin-left: 70px;
+}
+.nav-item-sb{
+   margin-right: 20px;
+   font-size: 18px;
+}
+.profile-pic{
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+/* MULAI BOX SCROLLING */
+#container-2{
+    width: 700px;
+    height: 365px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #1B1A55;
+    border-radius: 20px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    color: white;
+    position: relative;
+    padding: 5px 15px;
+}
+
+#wrapper{
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+#wrapper::-webkit-scrollbar {
+    margin-right: 10px;
+    margin-left: 20px;
+    height: 12px;
+  }
+  
+#wrapper::-webkit-scrollbar-thumb,
+#wrapper::-webkit-scrollbar-track {
+    border-radius: 92px;
+  }
+  
+#wrapper::-webkit-scrollbar-thumb {
+    background: #4960df;
+  }
+  
+#wrapper::-webkit-scrollbar-track {
+    background: white;
+  }
+
+#wrapper-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#wrapper-content{
+    width: 180px;
+    height: 200px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-bottom: 20px;
+    position: relative;
+
+}
+
+.progress-title{
+    height: 150px;
+    color: black;
+    padding: 2px;
+}
+.progress-text{
+    height: 50px;
+    color: rgb(62, 32, 233);
+}
+
+/* end box scrolling */
+
+/* box chapter */
+.bigbox-chapter{
+    margin-bottom: 50px;
+    padding: 30px;
+    width: 60%;
+    background-color: #535c91;
+    height: fit-content;
+    border-radius: 20px;
+}
+.box-chapter{
+    width: 90%;
+    height: fit-content;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.title-chapter{
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 10px !important;
+    font-size: 18px;
+    font-weight: bold;
+    /* background-color: yellow; */
+
+}
+.description-chapter{
+    margin-top: 5px;
+    margin-left: 20px;
+    margin-top: 5px;
+    width: 97%;
+    font-size: 16px;
+    margin-left: 10px !important;
+}
+.p-description-chapter{
+    word-wrap: break-word;
+    width: 95%;
+    text-align: justify;
+}
+
+.horizontal-line-desktop{
+    border-color: rgb(0, 0, 0); 
+    width: 30%;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.btn-ulangi{
+    padding: 8px 15px;
+    background-color: #40BF9C;
+    color: black !important ;
+    text-decoration: none !important;
+    border-radius: 10px ;
+    box-shadow: 1px 4px 2px #474747 ;
+    font-size: 16px ;}
+
+.btn-ulangi:hover{
+    background-color: #177559;
+}
+
+.btn-lihat{
+    padding: 8px 15px;
+    background-color: #1B1A55;
+    color: white !important ;
+    text-decoration: none !important;
+    border-radius: 10px ;
+    box-shadow: 1px 4px 2px #474747 ;
+    font-size: 16px;
+}
+
+.btn-lihat:hover{
+    background-color: #5B5A9B;
+}
+
+.btn-lanjutkan{
+    padding: 8px 15px;
+    background-color: #ECAA00;
+    color: black !important;
+    text-decoration: none !important;
+    border-radius: 10px;
+    box-shadow: 1px 4px 2px #474747;
+    font-size: 16px;
+}
+
+.btn-lanjutkan:hover{
+    background-color: #eed8a1;
+}
+
+.btn-mulai{
+    padding: 8px 15px;
+    background-color: #0004ff;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 10px ;
+    box-shadow: 1px 4px 2px #474747 ;
+    font-size: 16px;
+}
+
+.btn-mulai:hover{
+    background-color: #030438 ;
+}
+
+.tombol{
+    /* margin-right: 64px; */
+    position: relative;
+    margin-bottom: 10px;
+}
+
+
+/* end box chapter */
+.footer {
+    background-color: #070F2B;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  /* RESPONSIVE */
+@media only screen and (max-width: 768px) {
+    /* BOX PROGRESS */
+    #container-2{
+        width: 500px;
+    }
+    .logo{
+        margin-left: 30px;
+    }
+    .bigbox-chapter{
+        width: 70%;
+    }
+    .horizontal-line-desktop{
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 480px) {
+    /* BOX PROGRESS */
+    #container-2{
+        width: 300px;
+    }
+    .logo{
+        margin-left: 20px;
+    }
+    .horizontal-line-desktop{
+        width: 80%;
+    }
+    .bigbox-chapter{
+        width: 95%;
+    }
+}
+

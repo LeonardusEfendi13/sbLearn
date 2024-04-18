@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lessons.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a59b9b09ab.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
+    <title>Spring Boot Learn</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #070F2B; font-weight:bold;width: 100%;">
+    <a class="navbar-brand" href="/home">
+        <img class="logo" src="/Assets/logoSpringBoot.png"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item-sb ">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item-sb ">
+                <a class="nav-link" href="/leaderboard">Leaderboard</a>
+            </li>
+            <li class="nav-item-sb">
+                <a class="nav-link" href="/profile">
+                    <span th:text="${user.name}"></span>
+                    <img class="profile-pic" th:src="@{'/avatar/'+${user.profilePictureName}}"/></a>
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
+            <button type="submit" class="btn btn-outline-danger my-2 my-sm-0">Log Out
+            </button>
+        </form>
+    </div>
+</nav>
+<!-- START BOX MATERI -->
+<div class="row justify-content-center align-items-center" style="margin: 0;">
+    <div class="box-lesson">
+        <div class="row align-items-center heading-materi" style="margin: 0;">
+            <div class="col-md-3">
+                <div class="backBtn">
+                    <a style="color: white; font-size: 14px;font-weight: bold;" href="/home"><img
+                            src="/Assets/kembali.png" style="width: 25px;margin-right: 10px;">Kembali</a>
+                </div>
+            </div>
+
+            <div class="col-md-9" style="margin: 0;padding: 0;">
+                <div class="d-flex justify-content-end" style="margin: 0;">
+                    <div class="coin text-center">
+                        <img src="/Assets/coin.png" style="width: 25px;"/>
+                        <span th:text="${user.gold}"></span>
+                    </div>
+                    <div class="life text-center">
+                        <div th:each="i : ${#numbers.sequence(1, 3)}" th:remove="tag">
+                            <!-- If i is less than or equal to the count from the database -->
+                            <img th:if="${i le user.life}" th:id="'image' + ${i}" th:src="@{/Assets/Life.png}"
+                                 alt="Image" style="width: 25px; margin-left: 5px;"/> <!-- Example style -->
+                            <!-- If i is greater than the count from the database -->
+                            <img th:if="${i gt user.life}" id="other-image" th:src="@{/Assets/emptyLife.png}"
+                                 alt="Other Image" style="width: 25px; margin-left: 5px;"/> <!-- Example style -->
+                        </div>
+                    </div>
+
+                    <!-- Additional content -->
+                    <img th:if="${user.life < 3}" id="addLife" src="/Assets/add.png" data-target="#modalTambahLife"
+                         data-toggle="modal" style="cursor:pointer;width: 25px;"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="soal1" class="displayLesson show">
+            <div class="row justify-content-center align-items-center lesson-title" style="margin: 0;">
+                Memulai dengan Springboot (1/3)
+            </div>
+
+            <div class="row justify-content-center align-items-center" style="margin:0">
+                <div class="box-materi">
+                    Sebelum memulai sebuah aplikasi menggunakan framework Springboot, kita perlu menyiapkan
+                    beberapa dependency. Dependency merupakan sebuah modul eksternal yang memuat fungsi-fungsi
+                    tertentu untuk mendukung pengembangan aplikasi. Pada framework Springboot, dependency
+                    –dependency tersebut dikelola oleh build manager Maven atau Gradle. Pada direktori framework
+                    Springboot, seluruh dependency akan disimpan pada file pom.xml apabila menggunakan build manager
+                    Maven, dan disimpan pada file build.gradle apabila menggunakan build manager Gradle. Beberapa
+                    dependency yang umum digunakan diantaranya adalah <br><br>
+                    <p style="text-indent: 20px;">1. Dependency untuk membuat aplikasi web</p>
+                    <div class="row" style="margin: 0;margin-bottom: 20px;">
+                        <img class="image-lesson"
+                             src="/Assets/C2L1.1.png"/>
+                    </div>
+                    <p style="text-indent: 20px;">2. Dependency untuk akses database menggunakan JPA (Java
+                        Persistence API)</p>
+                    <div class="row" style="margin: 0;margin-bottom: 20px;">
+                        <img class="image-lesson"
+                             src="/Assets/C2L1.2.png"/>
+                    </div>
+                    <p style="text-indent: 20px;">3. Dependency untuk akses database MySQL</p>
+                    <div class="row" style="margin: 0;margin-bottom: 20px;">
+                        <img class="image-lesson"
+                             src="/Assets/C2L1.3.png"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center" style="margin: 0;">
+                <div class="box-question">
+                    <form class="answerForm" id="form1">
+                        <div class="form-group">
+                            <p></p>
+
+                            <label for="question" th:text="${lessons2.get(0).questions}"></label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="a" value="a">
+                                <label class="form-check-label" for="option1">a. Modul internal yang memuat
+                                    fungsi-fungsi tertentu untuk mendukung pengembangan aplikasi.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="b" value="b">
+                                <label class="form-check-label" for="option2">b. Modul Eksternal yang memuat
+                                    fungsi-fungsi tertentu untuk mendukung pengembangan aplikasi.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="c" value="c">
+                                <label class="form-check-label" for="option3">c. Modul Eksternal yang hanya dapat
+                                    digunakan untuk melakukan koneksi ke database</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="answer" id="d" value="d">
+                                <label class="form-check-label" for="option4">d. Merupakan sebuah modul eksternal
+                                    yang dikelola oleh build Manager Ant</label>
+                            </div>
+                            <input type="hidden" id="lessonId" th:value="${lessons2.get(0).lessonId}">
+                            <input type="hidden" id="answerLesson" th:value="${lessons2.get(0).answers}">
+                            <input type="hidden" id="userLifeFromDb" th:value="${user.life}">
+
+                        </div>
+
+                        <div class="lesson-Btn">
+                            <div id="cekJawaban1" class="displayBtn active" data-target="#modalCekJawaban">
+                                <button id="checkAnswerButton1" type="button"
+                                        class="btn button-edit btn-block btnCheckAns"
+                                        onclick="checkJawaban(this, 'form1')" disabled>Cek
+                                    Jawaban
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- MODAL Tambah Life -->
+<div class="modal fade" id="modalTambahLife" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Konfirmasi
+                    Penambahan Kesempatan</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;" th:if="${user.gold >= 20}">
+                <p>Tambah 1 kesempatan?</p>
+                <p>Harga : <img src="/Assets/coin.png" style="width: 20px;"/> 20</p>
+                <p>Gold tersisa : <img src="/Assets/coin.png" style="width: 20px;"/> <span
+                        th:text="${user.gold}"></span></p>
+            </div>
+            <div class="modal-body" style="text-align: center;" th:if="${user.gold < 20}">
+                <p>Gold Anda tidak mencukupi, silakan menunggu pergantian hari untuk penambahan kesempatan</p>
+                <p>Gold tersisa : <img src="/Assets/coin.png" style="width: 20px;"/> <span
+                        th:text="${user.gold}"></span></p>
+            </div>
+            <div class="modal-footer" th:if="${user.gold>=20}">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success" onclick="tambahLife()">Tambah</button>
+            </div>
+            <div class="modal-footer" th:if="${user.gold < 20}">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL PEMBELIAN LIFE -->
+
+<!-- MODAL CEK JAWABAN Benar -->
+<div class="modal fade" id="modalCekJawabanBenar" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Jawaban
+                    Anda
+                    Benar</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img style="width: 300px;" src="/Assets/True.png">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL CEK JAWABAN Benar -->
+
+<!-- MODAL CEK JAWABAN Salah -->
+<div class="modal fade" id="modalCekJawabanSalah" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Jawaban
+                    Anda
+                    Salah</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img style="width: 300px;" src="/Assets/False.png">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL CEK JAWABAN Salah -->
+<!-- MODAL WARNING LIFE <= 0 -->
+<div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-align: center;margin: 0 auto;font-weight: bold;">Peringatan
+                    Kesempatan Habis</h5>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img style="width: 300px;" src="/Assets/Warning.png">
+                <p style="font-weight: bold;">Kesempatan anda telah habis</p>
+                <p>Silakan tunggu hingga pergantian hari atau tambah kesempatan melalui menu "Profile"</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="backToHome()">Kembali ke
+                    Home
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL WARNING LIFE <= 0 -->
+
+
+<footer class="footer">
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;">
+        <h5 style="color: white;margin-top: 20px;">Contact Us</h5>
+    </div>
+    <div class="row justify-content-center align-items-center" style="width: 100%;margin:0;height: 70px;">
+        <a href="mailto:springbootlearn9@gmail.com">
+            <p style="font-size: 14px;">springbootlearn9@gmail.com</p>
+        </a>
+    </div>
+    <div class="row justify-content-center align-items-center"
+         style="background-color: rgb(0, 0, 0); margin-top: 20px;width: 100%;margin:0">
+        <p class="text-muted" style="padding: 5px;font-size: 14px;">Copyright @2024 All Rights Reserved.</p>
+    </div>
+</footer>
+<script th:inline="javascript">
+
+    function tambahLife(){
+        window.location.href ="/tambahLifec2l1";
+    }
+    function backToHome() {
+        window.location.href = "/home";
+    }
+    var userLife = document.getElementById("userLifeFromDb").value;
+    if (userLife <= 0) {
+        $('#modalWarning').modal('show');
+    }
+    var ansDb;
+    var selectedValue;
+    function checkJawaban(button, formId) {
+        ansDb = null;
+        selectedValue = null;
+        var status;
+        const BtnId = button.id.slice(-1) - 1;
+        const form = document.getElementById(formId);
+        const userAns = form.querySelectorAll('input[name="answer"]');
+        ansDb = document.getElementById('answerLesson').value;
+        var lessonId = document.getElementById('lessonId').value;
+        for (var i = 0; i < userAns.length; i++) {
+            if (userAns[i].checked) {
+                // If a radio button is checked, get its value
+                selectedValue = userAns[i].value;
+                break; // Exit the loop if a checked radio button is found
+            }
+        }
+        var target;
+        if (ansDb === selectedValue) {
+            target = "#modalCekJawabanBenar"; // Correct answer modal
+            status = "True"
+        } else {
+            target = "#modalCekJawabanSalah"; // Incorrect answer modal
+            status = "False"
+
+        }
+
+        userAns.forEach(function(radioButton) {
+            radioButton.disabled = true;
+        });
+
+        var dataToSend = {
+            answersDb: ansDb,
+            lessonId: lessonId,
+            answerUser: selectedValue,
+            status : status
+        };
+        sendDataToController(dataToSend);
+
+        $(target).modal('show');
+
+        $(target).on('hidden.bs.modal', function (e) {
+            window.location.href ="/Chapter2/Lesson1/Show";
+        });
+    }
+
+    function sendDataToController(data) {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/InputDataLessonC2",
+            data: JSON.stringify(data),
+            success: function(response) {
+                // Handle success response from the server
+            },
+            error: function(xhr, status, error) {
+                // Handle error response from the server
+                console.error("Error sending data: " + error);
+            }
+        });
+    }
+
+
+    //function untuk enable radio button pas select option
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const answerForms = document.querySelectorAll('.answerForm');
+
+        answerForms.forEach(function (form) {
+            const btnCheckAns = form.querySelector('.btnCheckAns');
+            const radioButtons = form.querySelectorAll('input[type="radio"]');
+            function toggleCekJawabanButton() {
+                let checked = false;
+                radioButtons.forEach(function (radioButton) {
+                    if (radioButton.checked) {
+                        checked = true;
+                    }
+                });
+                btnCheckAns.disabled = !checked;
+            }
+
+            // Add event listener to radio buttons
+            radioButtons.forEach(function (radioButton) {
+                radioButton.addEventListener("change", toggleCekJawabanButton);
+            });
+
+            // Initial check for enabling/disabling the button
+            toggleCekJawabanButton();
+        });
+    });
+
+</script>
+</body>
+
+
+</html>
