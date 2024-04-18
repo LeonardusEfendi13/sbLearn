@@ -52,7 +52,7 @@
             <li class="nav-item-sb">
                 <a class="nav-link" href="/profile">
                     <span th:text="${user.name}"></span>
-                    <img class="profile-pic" th:src="@{'/avatar/'+${user.profilePictureName}}"/></a>
+                    <img class="profile-pic" th:src="'Assets/' + ${user.profilePictureName} + '.png'"/></a>
                 </a>
             </li>
         </ul>

@@ -18,8 +18,12 @@ public class ProfilePictureEntity {
     @Column(name = "NAME", length = 50)
     private String imgName;
 
+//    @Lob
+//    @Column(name = "IMAGE_FILE")
+//    private String imageFile;
+
     @Lob
-    @Column(name = "IMAGE_FILE")
-    private String imageFile;
+    @Column(name = "IMAGE_FILE", columnDefinition = "bytea")
+    private byte[] imageFile;
 
 }

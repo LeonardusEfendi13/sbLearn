@@ -52,7 +52,8 @@
             <li class="nav-item-sb active">
                 <a class="nav-link" href="/profile">
                     <span th:text="${nameNavbar}"></span>
-                    <img class="profile-pic-nav" th:src="@{'/avatar/'+${user.profilePictureName}}"/></a>
+                    <img class="profile-pic-nav" th:src="'Assets/' + ${user.profilePictureName} + '.png'" />
+                </a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
@@ -73,7 +74,7 @@
         <div class="tab active" id="label1">
             <div class="row justify-content-center" style="margin: 0;">
                 <div class="pp-content text-center">
-                    <img class="profile-pic-account" th:src="@{'/avatar/'+${user.profilePictureName}}"/>
+                    <img class="profile-pic-account" th:src="'Assets/' + ${user.profilePictureName} + '.png'" />
                     <div>
                         <p class="acc-name" th:text="${user.name}"></p>
                         <div class="row justify-content-center align-items-center"
@@ -162,16 +163,16 @@
                     </div>
                     <form id="formImg" action="/changeProfilePicture" method="post">
                         <div class="avatar justify-content-center">
-                            <img id="Avatar1" src="/avatar/Avatar1" alt="Image 1" onclick="highlightImage(this)">
-                            <img id="Avatar2" src="/avatar/Avatar2" alt="Image 2" onclick="highlightImage(this)">
-                            <img id="Avatar3" src="/avatar/Avatar3" alt="Image 3" onclick="highlightImage(this)">
-                            <img id="Avatar4" src="/avatar/Avatar4" alt="Image 4" onclick="highlightImage(this)">
-                            <img id="Avatar5" src="/avatar/Avatar5" alt="Image 5" onclick="highlightImage(this)">
-                            <img id="Avatar6" src="/avatar/Avatar6" alt="Image 6" onclick="highlightImage(this)">
-                            <img id="Avatar7" src="/avatar/Avatar7" alt="Image 7" onclick="highlightImage(this)">
-                            <img id="Avatar8" src="/avatar/Avatar8" alt="Image 8" onclick="highlightImage(this)">
-                            <img id="Avatar9" src="/avatar/Avatar9" alt="Image 9" onclick="highlightImage(this)">
-                            <img id="Avatar10" src="/avatar/Avatar10" alt="Image 10" onclick="highlightImage(this)">
+                            <img id="Avatar1" src="/Assets/Avatar1.png" alt="Image 1" onclick="highlightImage(this)">
+                            <img id="Avatar2" src="/Assets/Avatar2.png" alt="Image 2" onclick="highlightImage(this)">
+                            <img id="Avatar3" src="/Assets/Avatar3.png" alt="Image 3" onclick="highlightImage(this)">
+                            <img id="Avatar4" src="/Assets/Avatar4.png" alt="Image 4" onclick="highlightImage(this)">
+                            <img id="Avatar5" src="/Assets/Avatar5.png" alt="Image 5" onclick="highlightImage(this)">
+                            <img id="Avatar6" src="/Assets/Avatar6.png" alt="Image 6" onclick="highlightImage(this)">
+                            <img id="Avatar7" src="/Assets/Avatar7.png" alt="Image 7" onclick="highlightImage(this)">
+                            <img id="Avatar8" src="/Assets/Avatar8.png" alt="Image 8" onclick="highlightImage(this)">
+                            <img id="Avatar9" src="/Assets/Avatar9.png" alt="Image 9" onclick="highlightImage(this)">
+                            <img id="Avatar10" src="/Assets/Avatar10.png" alt="Image 10" onclick="highlightImage(this)">
                         </div>
                         <input type="hidden" id="submitImgId" name="submitImgId">
                         <button type="button" class="btn button-edit btn-block" style="margin-top: 40px;"

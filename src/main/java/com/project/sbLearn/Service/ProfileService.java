@@ -22,12 +22,14 @@ public class ProfileService {
         return !accountRepository.existsByEmailAndUidNot(email, uid);
     }
 
-    public String getImageFromDb(String name) {
-        Optional<ProfilePictureEntity> profilePictureOptional = profilePictureRepository.findByimgName(name);
+    public byte[] getImageFromDb(String imgName) {
+        Optional<ProfilePictureEntity> profilePictureOptional = profilePictureRepository.findByimgName(imgName);
         if (profilePictureOptional.isPresent()) {
-            return profilePictureOptional.get().getImageFile();
+            ProfilePictureEntity profilePicture = profilePictureOptional.get();
+            return profilePicture.getImageFile();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public byte[] decodeBase64String(String base64String) {

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -94,9 +95,12 @@ public class ProfileController {
     @GetMapping("/avatar/{imgName}")
     public ResponseEntity<byte[]> getImageByName(@PathVariable("imgName") String imgName) {
         System.out.println("Name is : " + imgName);
-        String base64Image = profileService.getImageFromDb(imgName);
-        byte[] imgBytes = profileService.decodeBase64String(base64Image);
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imgBytes);
+        byte[] imgBytes = profileService.getImageFromDb(imgName);
+        if (imgBytes != null) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imgBytes);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/changeProfilePicture")
