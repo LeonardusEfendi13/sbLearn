@@ -30,7 +30,7 @@ public class ChapterService {
     }
 
     public AccountChapterEntity getFirstIncompleteChapter(String uid){
-        List<AccountChapterEntity> accountChapterEntities = accountChapterRepository.findByUserId(uid);
+        List<AccountChapterEntity> accountChapterEntities = accountChapterRepository.findByUserIdOrderByChapterLevelAsc(uid);
         int firstIncompleteId = 0;
         boolean foundIncompleteChapter = false;
         for(AccountChapterEntity accountChapter : accountChapterEntities){

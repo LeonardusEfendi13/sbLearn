@@ -44,7 +44,7 @@ public class HomeController {
             System.out.println("ada session : " + (String) session.getAttribute("nameNavbar"));
             AccountEntity user = accountRepository.findByUsername((String) session.getAttribute("username"));
             List<ChapterEntity> chapter = chapterRepository.findAll();
-            List<AccountChapterEntity> accountChapterEntities = accountChapterRepository.findByUserId(user.getUid());
+            List<AccountChapterEntity> accountChapterEntities = accountChapterRepository.findByUserIdOrderByChapterLevelAsc(user.getUid());
             model.addAttribute("user", user);
             model.addAttribute("chapter", chapter);
             model.addAttribute("accountChapter", accountChapterEntities);
