@@ -67,7 +67,7 @@ public class AccountController {
         } else {
             // If login fails, redirect back to login page with an error message
             model.addAttribute("error", "Username atau Password salah");
-            return "/login";
+            return "login";
         }
     }
 
@@ -452,7 +452,7 @@ public String tambahLifec4l1(HttpSession session) {
             }
         } else {
             model.addAttribute("notFound", "Email tidak ditemukan.");
-            return "/emailOtp";
+            return "emailOtp";
         }
     }
 
@@ -505,7 +505,7 @@ public String tambahLifec4l1(HttpSession session) {
                     return "newPassword";
                 }
             } else {
-                return "/resetPassword";
+                return "redirect:/resetPassword";
             }
         }else{
             System.out.println("password gabole kosong");
