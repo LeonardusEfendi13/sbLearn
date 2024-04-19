@@ -56,7 +56,7 @@ public class RegisterService {
         accountEntity.setGold(50);
         accountEntity.setLife(3);
         accountEntity.setBadge("Bronze");
-        accountEntity.setProfilePictureName("avatar10");
+        accountEntity.setProfilePictureName("Avatar10");
         accountRepository.save(accountEntity);
 
 
