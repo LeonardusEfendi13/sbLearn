@@ -476,9 +476,11 @@ public String tambahLifec4l1(HttpSession session) {
                               HttpSession session) {
         String storedOtp = (String) session.getAttribute("generatedOtp");
 
+
         if (InputOtp.equalsIgnoreCase(storedOtp)) {
             System.out.println("COCOK : " + storedOtp + " vs " + InputOtp);
             session.removeAttribute("generatedOtp");
+            session.setAttribute("inputOtp", InputOtp);
             return "redirect:/resetPassword";
         } else {
             System.out.println("GA COCOK : " + storedOtp + " vs " + InputOtp);

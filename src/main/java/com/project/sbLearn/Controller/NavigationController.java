@@ -214,18 +214,35 @@ public class NavigationController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(HttpSession session) {
+        System.out.println(session.getAttribute("emailTo") + " " + session.getAttribute("inputOtp"));
+        session.removeAttribute("emailTo");
+        System.out.println("SUKSES REMOVE SESSION EMAILTO");
+        session.removeAttribute("inputOtp");
+        System.out.println("SUKSES REMOVE SESSION inputOtp");
         return "login"; // Return the login page
     }
 
     @GetMapping("/resetPassword")
-    public String showResetPassword() {
-        return "newPassword";
+    public String showResetPassword(HttpSession session) {
+        if(session.getAttribute("emailTo") != null) {
+            if(session.getAttribute("inputOtp") != null){
+                return "newPassword";
+            }else{
+                return "redirect:/OTPResetPassword";
+            }
+        }else{
+            return "redirect:/emailOtp";
+        }
     }
 
     @GetMapping("/OTPResetPassword")
-    public String showOTPResetPassword() {
-        return "newPasswordOTP";
+    public String showOTPResetPassword(HttpSession session) {
+        if(session.getAttribute("emailTo") != null){
+            return "newPasswordOTP";
+        }else{
+            return "redirect:/emailOtp";
+        }
     }
 
     @GetMapping("/emailOtp")
