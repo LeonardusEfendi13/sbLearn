@@ -1,0 +1,1 @@
+sbLearn merupakan sebuah aplikasi website yang menjadi proyek skripsi saya. SbLearn dibangun menggunakan HTMl, CSS, JS untuk front end dan Java dengan framework Spring Boot untuk back end. Database yang digunakan adalah PostgreSQL dan aplikasi website ini dihosting melalui heroku
